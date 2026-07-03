@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinha & Taça — Adega e Enoteca</title>
+<meta name="description" content="Vinha & Taça — vinhos selecionados, adega climatizada e harmonizações para todas as ocasiões.">
+<style>
+  :root{
+    --bordeaux:#5E1F2E;
+    --bordeaux-deep:#3D1420;
+    --gold:#B8934B;
+    --cream:#F7F0E4;
+    --cream-2:#EEE3CE;
+    --ink:#2B211B;
+    --ink-soft:#6B5E52;
+    --line:#DDCBA8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--cream); color:var(--ink); font-family:Georgia,'Iowan Old Style',serif; line-height:1.65;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 36px;}
+  .sans{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif;}
+
+  nav{position:sticky; top:0; z-index:50; background:rgba(247,240,228,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+  .nav-row{display:flex; justify-content:space-between; align-items:center; padding:22px 36px;}
+  .brand{font-size:21px; letter-spacing:0.3px; display:flex; align-items:center; gap:10px;}
+  .brand .glass{width:11px; height:16px; border:2px solid var(--bordeaux); border-top:none; border-radius:0 0 6px 6px; position:relative;}
+  .brand .glass::after{content:''; position:absolute; bottom:-5px; left:50%; width:1px; height:5px; background:var(--bordeaux); transform:translateX(-50%);}
+  .brand span{color:var(--bordeaux);}
+  .nav-links{display:flex; gap:32px; font-family:'Segoe UI',sans-serif;}
+  .nav-links a{font-size:12.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-soft);}
+  .nav-links a:hover{color:var(--bordeaux);}
+  .menu-toggle{display:none; background:none; border:none; font-size:22px; cursor:pointer; color:var(--ink);}
+
+  /* HERO — tall vertical bottle photo */
+  .hero{padding:60px 0 0;}
+  .hero-grid{display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center;}
+  .eyebrow{font-family:'Segoe UI',sans-serif; font-size:12.5px; letter-spacing:2px; text-transform:uppercase; color:var(--bordeaux); margin-bottom:22px;}
+  h1{font-weight:400; font-size:46px; line-height:1.18; margin-bottom:24px;}
+  h1 em{font-style:italic; color:var(--bordeaux);}
+  .hero p{font-size:16.5px; color:var(--ink-soft); max-width:440px; margin-bottom:32px;}
+  .btn{font-family:'Segoe UI',sans-serif; font-size:12.5px; letter-spacing:1px; text-transform:uppercase; padding:15px 28px; display:inline-block; transition:all .25s ease;}
+  .btn-solid{background:var(--bordeaux-deep); color:var(--cream);}
+  .btn-solid:hover{background:var(--bordeaux);}
+  .btn-line{border:1px solid var(--ink); color:var(--ink); margin-left:12px;}
+  .btn-line:hover{background:var(--ink); color:var(--cream);}
+
+  .hero-photo{aspect-ratio:2/3; overflow:hidden; box-shadow:0 25px 50px rgba(61,20,32,0.25);}
+  .hero-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+
+  section{padding:90px 0;}
+  .section-head{max-width:560px; margin:0 auto 52px; text-align:center;}
+  .section-head .eyebrow{margin-bottom:16px;}
+  h2{font-weight:400; font-size:34px;}
+  h2 em{font-style:italic; color:var(--bordeaux);}
+  .section-head p{color:var(--ink-soft); font-size:15px; margin-top:14px; font-family:'Segoe UI',sans-serif;}
+
+  /* CARTA — dotted-leader wine list, no photos */
+  .menu-group{margin-bottom:48px;}
+  .menu-group:last-child{margin-bottom:0;}
+  .menu-group h3{
+    font-family:'Segoe UI',sans-serif; font-size:12px; letter-spacing:2.5px; text-transform:uppercase;
+    color:var(--bordeaux); margin-bottom:22px; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+  .menu-item{display:flex; align-items:baseline; gap:10px; padding:14px 0; border-bottom:1px dashed var(--line);}
+  .menu-item:last-child{border-bottom:none;}
+  .menu-item .name{font-size:17px;}
+  .menu-item .name small{display:block; font-family:'Segoe UI',sans-serif; font-size:12.5px; color:var(--ink-soft); margin-top:3px; font-style:normal;}
+  .menu-item .dots{flex:1; border-bottom:1px dotted var(--ink-soft); position:relative; top:-4px;}
+  .menu-item .price{font-family:'Segoe UI',sans-serif; font-size:15px; color:var(--bordeaux); white-space:nowrap;}
+
+  /* ADEGA — stat + photo split, not full-bleed band */
+  .cellar{background:var(--bordeaux-deep); color:var(--cream);}
+  .cellar-inner{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;}
+  .cellar-stats{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .cellar-stat{border:1px solid rgba(247,240,228,0.25); padding:24px;}
+  .cellar-stat strong{display:block; font-size:2rem; color:var(--gold); margin-bottom:6px;}
+  .cellar-stat span{font-family:'Segoe UI',sans-serif; font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:#D8C7B0;}
+  .cellar-photo{aspect-ratio:4/3; overflow:hidden;}
+  .cellar-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+  .cellar-text{grid-column:1/-1; margin-top:10px;}
+  .cellar-text .eyebrow{color:var(--gold);}
+  .cellar-text p{color:#D8C7B0; max-width:520px; margin-top:14px; font-family:'Segoe UI',sans-serif; font-size:15px;}
+
+  /* HARMONIZAÇÃO */
+  .pairs{display:grid; grid-template-columns:repeat(3,1fr); gap:32px;}
+  .pair-card{background:var(--cream-2); border:1px solid var(--line);}
+  .pair-photo{aspect-ratio:4/3; overflow:hidden;}
+  .pair-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+  .pair-info{padding:22px 22px 26px;}
+  .pair-info h3{font-size:18px; margin-bottom:8px;}
+  .pair-info p{font-family:'Segoe UI',sans-serif; font-size:13.5px; color:var(--ink-soft);}
+
+  /* SOBRE */
+  .about-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;}
+  .about-photo{aspect-ratio:4/3; overflow:hidden;}
+  .about-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+  .about-text p{color:var(--ink-soft); margin-bottom:16px; font-size:15.5px; font-family:'Segoe UI',sans-serif;}
+
+  .contact-inner{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center;}
+  .info-row{padding:16px 0; border-bottom:1px solid var(--line); font-size:15px; font-family:'Segoe UI',sans-serif;}
+  .info-row span{display:block; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:5px;}
+
+  footer{border-top:1px solid var(--line); padding:34px 0; font-family:'Segoe UI',sans-serif;}
+  .foot-row{display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-size:13px; color:var(--ink-soft);}
+
+  @media(max-width:900px){
+    .nav-links{
+      display:none; position:fixed; top:66px; left:0; right:0; z-index:60;
+      flex-direction:column; align-items:center; gap:20px;
+      background:var(--cream); border-bottom:1px solid var(--line); padding:26px 0;
+    }
+    .nav-links.open{display:flex;}
+    .menu-toggle{display:block;}
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-photo{order:-1; aspect-ratio:4/3;}
+    h1{font-size:32px;}
+    .cellar-inner{grid-template-columns:1fr;}
+    .pairs{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .contact-inner{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-row wrap" style="padding-left:0; padding-right:0;">
+    <div class="brand"><span class="glass"></span>Vinha <span>&</span> Taça</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#carta">Carta</a>
+      <a href="#adega">Adega</a>
+      <a href="#harmonizacao">Harmonização</a>
+      <a href="#contato">Visitar</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Enoteca e adega climatizada</div>
+      <h1>Vinho certo não é<br>o mais caro — é o <em>combinado</em>.</h1>
+      <p>Selecionamos rótulos de pequenos produtores e guiamos cada cliente até a garrafa certa para a ocasião, não para a prateleira.</p>
+      <a href="#carta" class="btn btn-solid">Ver a carta</a>
+      <a href="#contato" class="btn btn-line">Agendar degustação</a>
+    </div>
+    <div class="hero-photo">
+      <img src="https://images.pexels.com/photos/12179476/pexels-photo-12179476.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Garrafa e taça de vinho tinto">
+    </div>
+  </div>
+</header>
+
+<section id="carta" class="wrap">
+  <div class="section-head">
+    <div class="eyebrow">Carta da casa</div>
+    <h2>Selecionados <em>por safra</em></h2>
+    <p>Carta renovada a cada trimestre, conforme disponibilidade dos produtores parceiros.</p>
+  </div>
+
+  <div class="menu-group">
+    <h3>Tintos</h3>
+    <div class="menu-item">
+      <span class="name">Reserva Vale dos Vinhedos, 2021<small>Cabernet Sauvignon · corpo encorpado, taninos macios</small></span>
+      <span class="dots"></span>
+      <span class="price">R$ 145</span>
+    </div>
+    <div class="menu-item">
+      <span class="name">Quinta da Serra, 2019<small>Tempranillo · notas de frutas negras e especiarias</small></span>
+      <span class="dots"></span>
+      <span class="price">R$ 210</span>
+    </div>
+  </div>
+
+  <div class="menu-group">
+    <h3>Brancos</h3>
+    <div class="menu-item">
+      <span class="name">Encosta Branca, 2023<small>Sauvignon Blanc · fresco, notas cítricas</small></span>
+      <span class="dots"></span>
+      <span class="price">R$ 98</span>
+    </div>
+    <div class="menu-item">
+      <span class="name">Colheita Tardia, 2022<small>Riesling · doce, aromas florais</small></span>
+      <span class="dots"></span>
+      <span class="price">R$ 132</span>
+    </div>
+  </div>
+
+  <div class="menu-group">
+    <h3>Espumantes</h3>
+    <div class="menu-item">
+      <span class="name">Brut Tradicional<small>Método charmat, borbulha fina e persistente</small></span>
+      <span class="dots"></span>
+      <span class="price">R$ 118</span>
+    </div>
+    <div class="menu-item">
+      <span class="name">Rosé Méthode Champenoise<small>18 meses sobre leveduras, aroma de frutas vermelhas</small></span>
+      <span class="dots"></span>
+      <span class="price">R$ 260</span>
+    </div>
+  </div>
+</section>
+
+<section id="adega" class="cellar">
+  <div class="wrap cellar-inner">
+    <div class="cellar-stats">
+      <div class="cellar-stat"><strong>14°C</strong><span>Temperatura constante</span></div>
+      <div class="cellar-stat"><strong>70%</strong><span>Umidade controlada</span></div>
+      <div class="cellar-stat"><strong>3.200</strong><span>Garrafas em estoque</span></div>
+      <div class="cellar-stat"><strong>40+</strong><span>Rótulos exclusivos</span></div>
+    </div>
+    <div class="cellar-photo">
+      <img src="https://images.pexels.com/photos/19714324/pexels-photo-19714324.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Garrafas de vinho deitadas em adega">
+    </div>
+    <div class="cellar-text">
+      <div class="eyebrow">Nossa adega</div>
+      <p>Climatizada e escura, guardamos cada garrafa deitada, na posição e temperatura recomendadas pelo próprio produtor.</p>
+    </div>
+  </div>
+</section>
+
+<section id="harmonizacao" class="wrap">
+  <div class="section-head">
+    <div class="eyebrow">Sugestões da casa</div>
+    <h2>Harmonizações <em>que funcionam</em></h2>
+  </div>
+  <div class="pairs">
+    <div class="pair-card">
+      <div class="pair-photo"><img src="https://images.pexels.com/photos/3398711/pexels-photo-3398711.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Taças de vinho tinto servidas"></div>
+      <div class="pair-info">
+        <h3>Tinto encorpado + queijos curados</h3>
+        <p>Taninos firmes cortam a gordura do queijo, equilibrando o paladar.</p>
+      </div>
+    </div>
+    <div class="pair-card">
+      <div class="pair-photo"><img src="https://images.pexels.com/photos/4408180/pexels-photo-4408180.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Vinho branco servido em taça"></div>
+      <div class="pair-info">
+        <h3>Branco fresco + frutos do mar</h3>
+        <p>Acidez alta realça o sabor de peixes e frutos do mar grelhados.</p>
+      </div>
+    </div>
+    <div class="pair-card">
+      <div class="pair-photo"><img src="https://images.pexels.com/photos/3019019/pexels-photo-3019019.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Taças de espumante em celebração"></div>
+      <div class="pair-info">
+        <h3>Espumante + entradas leves</h3>
+        <p>Borbulhas limpam o paladar entre uma entrada e outra.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre" class="wrap">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="eyebrow">Nossa história</div>
+      <h2 style="margin-bottom:18px;">De importador <em>a enoteca</em> de bairro</h2>
+      <p>Começamos importando vinhos para restaurantes e, aos poucos, abrimos as portas para quem queria comprar direto da fonte. Hoje selecionamos cada rótulo pessoalmente, visitando vinícolas parceiras todo ano.</p>
+      <p>Nossa equipe é treinada para recomendar, nunca empurrar — o objetivo é a garrafa certa, não a mais cara.</p>
+    </div>
+    <div class="about-photo">
+      <img src="https://images.pexels.com/photos/774455/pexels-photo-774455.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Prateleiras de vinho em adega rústica">
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="wrap">
+  <div class="contact-inner">
+    <div>
+      <div class="section-head" style="text-align:left; margin-bottom:24px;">
+        <div class="eyebrow">Visite a enoteca</div>
+        <h2>Aberto de <em>terça a sábado</em></h2>
+      </div>
+      <a href="#" class="btn btn-solid">Chamar no WhatsApp</a>
+    </div>
+    <div>
+      <div class="info-row"><span>Endereço</span>Rua das Videiras, 150 — Jardim Europa</div>
+      <div class="info-row"><span>Horário</span>Terça a sábado, 12h às 22h</div>
+      <div class="info-row"><span>Telefone</span>(51) 99444-7788</div>
+      <div class="info-row"><span>E-mail</span>contato@vinhaetaca.com.br</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div>© 2026 Vinha & Taça — Adega e Enoteca</div>
+    <div>SELECIONADO POR SAFRA</div>
+  </div>
+</footer>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+</script>
+
+</body>
+</html>
