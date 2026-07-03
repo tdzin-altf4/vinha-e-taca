@@ -35,7 +35,30 @@
   .menu-toggle{display:none; background:none; border:none; font-size:22px; cursor:pointer; color:var(--ink);}
 
   /* HERO — tall vertical bottle photo */
-  .hero{padding:60px 0 0;}
+  .hero{padding:60px 0 0; position:relative; overflow:hidden;}
+
+  /* Taça de vinho balançando — o vinho gira dentro da taça conforme a rolagem */
+  .swirl-glass{
+    position:absolute; top:24px; right:6%; width:90px; height:130px; z-index:2; opacity:0.92;
+  }
+  .swirl-glass svg{width:100%; height:100%; overflow:visible;}
+  .swirl-liquid{ transform-origin:60px 58px; will-change:transform; }
+
+  /* Reveal suave ao rolar (sem blur) */
+  .reveal{
+    opacity:0; transform:translateY(26px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    .swirl-liquid{ transform:none !important; }
+    .reveal{ opacity:1 !important; transform:none !important; transition:none; }
+  }
+
+  @media(max-width:900px){
+    .swirl-glass{ width:60px; height:88px; top:14px; right:4%; }
+  }
   .hero-grid{display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center;}
   .eyebrow{font-family:'Segoe UI',sans-serif; font-size:12.5px; letter-spacing:2px; text-transform:uppercase; color:var(--bordeaux); margin-bottom:22px;}
   h1{font-weight:400; font-size:46px; line-height:1.18; margin-bottom:24px;}
@@ -142,6 +165,16 @@
 </nav>
 
 <header class="hero wrap">
+  <div class="swirl-glass">
+    <svg viewBox="0 0 120 200">
+      <path d="M30,20 C30,70 30,90 60,100 C90,90 90,70 90,20" fill="none" stroke="var(--ink)" stroke-width="2"/>
+      <g class="swirl-liquid" id="swirlLiquid">
+        <path d="M34,55 C34,80 45,92 60,95 C75,92 86,80 86,55 C86,45 75,50 60,50 C45,50 34,45 34,55 Z" fill="var(--bordeaux)" opacity="0.75"/>
+      </g>
+      <line x1="60" y1="100" x2="60" y2="165" stroke="var(--ink)" stroke-width="2"/>
+      <ellipse cx="60" cy="170" rx="22" ry="6" fill="none" stroke="var(--ink)" stroke-width="2"/>
+    </svg>
+  </div>
   <div class="hero-grid">
     <div>
       <div class="eyebrow">Enoteca e adega climatizada</div>
@@ -157,13 +190,13 @@
 </header>
 
 <section id="carta" class="wrap">
-  <div class="section-head">
+  <div class="section-head reveal">
     <div class="eyebrow">Carta da casa</div>
     <h2>Selecionados <em>por safra</em></h2>
     <p>Carta renovada a cada trimestre, conforme disponibilidade dos produtores parceiros.</p>
   </div>
 
-  <div class="menu-group">
+  <div class="menu-group reveal">
     <h3>Tintos</h3>
     <div class="menu-item">
       <span class="name">Reserva Vale dos Vinhedos, 2021<small>Cabernet Sauvignon · corpo encorpado, taninos macios</small></span>
@@ -177,7 +210,7 @@
     </div>
   </div>
 
-  <div class="menu-group">
+  <div class="menu-group reveal" style="transition-delay:.08s">
     <h3>Brancos</h3>
     <div class="menu-item">
       <span class="name">Encosta Branca, 2023<small>Sauvignon Blanc · fresco, notas cítricas</small></span>
@@ -191,7 +224,7 @@
     </div>
   </div>
 
-  <div class="menu-group">
+  <div class="menu-group reveal" style="transition-delay:.16s">
     <h3>Espumantes</h3>
     <div class="menu-item">
       <span class="name">Brut Tradicional<small>Método charmat, borbulha fina e persistente</small></span>
@@ -208,13 +241,13 @@
 
 <section id="adega" class="cellar">
   <div class="wrap cellar-inner">
-    <div class="cellar-stats">
+    <div class="cellar-stats reveal">
       <div class="cellar-stat"><strong>14°C</strong><span>Temperatura constante</span></div>
       <div class="cellar-stat"><strong>70%</strong><span>Umidade controlada</span></div>
       <div class="cellar-stat"><strong>3.200</strong><span>Garrafas em estoque</span></div>
       <div class="cellar-stat"><strong>40+</strong><span>Rótulos exclusivos</span></div>
     </div>
-    <div class="cellar-photo">
+    <div class="cellar-photo reveal" style="transition-delay:.1s">
       <img src="https://images.pexels.com/photos/19714324/pexels-photo-19714324.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Garrafas de vinho deitadas em adega">
     </div>
     <div class="cellar-text">
@@ -230,21 +263,21 @@
     <h2>Harmonizações <em>que funcionam</em></h2>
   </div>
   <div class="pairs">
-    <div class="pair-card">
+    <div class="pair-card reveal">
       <div class="pair-photo"><img src="https://images.pexels.com/photos/3398711/pexels-photo-3398711.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Taças de vinho tinto servidas"></div>
       <div class="pair-info">
         <h3>Tinto encorpado + queijos curados</h3>
         <p>Taninos firmes cortam a gordura do queijo, equilibrando o paladar.</p>
       </div>
     </div>
-    <div class="pair-card">
+    <div class="pair-card reveal" style="transition-delay:.08s">
       <div class="pair-photo"><img src="https://images.pexels.com/photos/4408180/pexels-photo-4408180.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Vinho branco servido em taça"></div>
       <div class="pair-info">
         <h3>Branco fresco + frutos do mar</h3>
         <p>Acidez alta realça o sabor de peixes e frutos do mar grelhados.</p>
       </div>
     </div>
-    <div class="pair-card">
+    <div class="pair-card reveal" style="transition-delay:.16s">
       <div class="pair-photo"><img src="https://images.pexels.com/photos/3019019/pexels-photo-3019019.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Taças de espumante em celebração"></div>
       <div class="pair-info">
         <h3>Espumante + entradas leves</h3>
@@ -256,13 +289,13 @@
 
 <section id="sobre" class="wrap">
   <div class="about-grid">
-    <div class="about-text">
+    <div class="about-text reveal">
       <div class="eyebrow">Nossa história</div>
       <h2 style="margin-bottom:18px;">De importador <em>a enoteca</em> de bairro</h2>
       <p>Começamos importando vinhos para restaurantes e, aos poucos, abrimos as portas para quem queria comprar direto da fonte. Hoje selecionamos cada rótulo pessoalmente, visitando vinícolas parceiras todo ano.</p>
       <p>Nossa equipe é treinada para recomendar, nunca empurrar — o objetivo é a garrafa certa, não a mais cara.</p>
     </div>
-    <div class="about-photo">
+    <div class="about-photo reveal" style="transition-delay:.1s">
       <img src="https://images.pexels.com/photos/774455/pexels-photo-774455.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Prateleiras de vinho em adega rústica">
     </div>
   </div>
@@ -300,6 +333,37 @@
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => navLinks.classList.remove('open'));
   });
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduceMotion) {
+    // O vinho balança dentro da taça conforme a rolagem, como um swirl de degustação
+    const swirlLiquid = document.getElementById('swirlLiquid');
+    function onScroll() {
+      if (swirlLiquid) {
+        const angle = Math.sin(window.scrollY * 0.01) * 18;
+        swirlLiquid.style.transform = `rotate(${angle}deg)`;
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // Elementos aparecem suavemente ao entrar na tela
+  const revealTargets = document.querySelectorAll('.reveal');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealTargets.forEach(el => el.classList.add('in-view'));
+  } else {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealTargets.forEach(el => revealObserver.observe(el));
+  }
 </script>
 
 </body>
